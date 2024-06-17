@@ -3,7 +3,7 @@ A modified version of the Web Application Reconnaissance Automation script from 
 
 I found that amass rather than taking forever, wouldn't scan properly to begin with. I changed the amass command in the script, switched from subjack to subzy for the subdomain takeover section as subjack is deprecated. I also added in installations for all of the dependencies for the script to run. 
 
-### Installtion instructions
+### Installation Instructions
 
 ```
 git clone https://github.com/N0vaSky/WebAppRecon
