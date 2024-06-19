@@ -28,4 +28,4 @@ Clone the repository and navigate to the directory where the script is located:
 ```bash
 git clone https://github.com/N0vaSky/WebAppRecon.git
 cd WebAppRecon
-sudo ./webrecond.sh
+sudo ./webrecond.sh <domain>
