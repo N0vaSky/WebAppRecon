@@ -27,4 +27,9 @@ Clone the repository and navigate to the directory where the script is located:
 git clone https://github.com/N0vaSky/WebAppRecon.git
 cd WebAppRecon
 chmod +x webrecon.sh
-sudo ./webrecon.sh
+```
+
+Run the script as sudo or root to ensure all dependencies are installed properly. 
+
+***Usage***
+sudo ./webrecon.sh <domain>
