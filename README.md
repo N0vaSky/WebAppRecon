@@ -15,8 +15,6 @@ This repository hosts `webrecon.sh`, a web reconnaissance script that builds upo
 - **Extended Web Scraping and Analysis**: Integrates `gospider` and `ffuf` for deep web crawling and directory busting.
 - **Reverse WHOIS lookup and associated ASN numbers**: Performs a whois lookup and grabs the associated ASN numbers for the discovered IP's.
 
-### Happy Hacking!
-
 [Side note: It's probably a good idea to run pimpmykali by Dewalt first to avoid any other unforseen issues. Just use the "N" option when you run pimpmykali for a "new vm setup". Ref: https://github.com/Dewalt-arch/pimpmykali]
 
 Here is the original script by TCM Security that was built upon in this version: https://pastebin.com/MhE6zXVt
