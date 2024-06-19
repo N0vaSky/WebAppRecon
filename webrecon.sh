@@ -80,13 +80,13 @@ install_dependencies() {
     fi
 
     # Install ffuf
-    if (! command -v ffuf &> /dev/null); then
+    if ! command -v ffuf &> /dev/null; then
         echo "[+] Installing ffuf..."
         go install github.com/ffuf/ffuf@latest
     fi
 
     # Install nuclei
-    if (! command -v nuclei &> /dev/null); then
+    if ! command -v nuclei &> /dev/null; then
         echo "[+] Installing nuclei..."
         go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
         echo "[+] Downloading Nuclei templates..."
@@ -94,18 +94,18 @@ install_dependencies() {
     fi
 
     # Install whois
-    if (! command -v whois &> /dev/null); then
+    if ! command -v whois &> /dev/null; then
         echo "[+] Installing whois..."
         sudo apt install -y whois
     fi
 
     # Install Python and ipwhois library
-    if (! command -v python3 &> /dev/null); then
+    if ! command -v python3 &> /dev/null; then
         echo "[+] Installing Python3..."
         sudo apt install -y python3 python3-pip
     fi
 
-    if (! python3 -c "import ipwhois" &> /dev/null); then
+    if ! python3 -c "import ipwhois" &> /dev/null; then
         echo "[+] Installing ipwhois library..."
         pip3 install ipwhois
     fi
@@ -182,9 +182,9 @@ while [ ! -f "$url/recon/scans/scanned.gnmap" ]; do
     sleep 1
 done
 
-echo "[+] Highlighting juicy services and ports..."
-mkdir -p $url/recon/scans/juicy
-grep -iE "open.*(http|https|ssh|ftp|smtp|snmp|pop3|imap|rdp|telnet|ldap)" $url/recon/scans/scanned.gnmap > $url/recon/scans/juicy/juicy_ports.txt
+echo "[+] Highlighting interesting services and ports..."
+mkdir -p $url/recon/scans/interesting
+grep -iE "open.*(http|https|ssh|ftp|smtp|snmp|pop3|imap|rdp|telnet|ldap)" $url/recon/scans/scanned.gnmap > $url/recon/scans/interesting/interesting_ports.txt
 
 # Use a smaller, more targeted username and password list
 echo "[+] Creating targeted username and password lists..."
@@ -299,5 +299,15 @@ grep -iE "severity: High" $url/recon/nuclei/nuclei_results.txt > $url/recon/summ
 
 # Create a summary of interesting files and directories from FFUF results
 cp $url/recon/ffuf/interesting.txt $url/recon/summaries/interesting_files_and_directories.txt
+
+echo "[+] Creating a summary of interesting ports..."
+{
+    echo "Interesting Ports for $url"
+    echo "========================="
+    cat $url/recon/scans/interesting/interesting_ports.txt | while read -r line; do
+        echo "$line"
+        echo "-------------------------"
+    done
+} > $url/recon/summaries/interesting_ports.txt
 
 echo "[+] Web Application Recon Complete, Happy Hacking!"
