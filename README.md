@@ -5,13 +5,15 @@ This repository hosts `webrecon.sh`, a web reconnaissance script that builds upo
 ## Features
 
 - **Automated Dependency Management**: Automates the installation of necessary tools, ensuring all dependencies are met without manual intervention.
-- **Advanced Subdomain Enumeration**: Leverages `assetfinder` and `amass` for robust subdomain discovery.
+- **Subdomain Enumeration**: Leverages `assetfinder` and `amass` for robust subdomain discovery.
+- **Probing for live pages**: Uses `httprobe` and creates a file of all the alive pages to be scanned. 
 - **Subdomain Takeover Analysis**: Utilizes `subzy` to check for potential subdomain takeovers.
-- **Comprehensive Port and Vulnerability Scanning**: Includes tools like `nmap` and `nikto` for detailed scanning.
+- **Comprehensive Port and Vulnerability Scanning**: Includes tools like `nmap`, `nikto`, and `nuclei` for detailed scanning.
 - **Visual Reconnaissance**: Employs `gowitness` for capturing screenshots of live web pages.
-- **Brute Force Testing**: Uses `brutespray` for automated brute force attacks on discovered services.
+- **Brute Force Testing**: Uses `brutespray` for automated brute force attacks on discovered services found via `nmap`.
 - **Historical Data Analysis**: Utilizes `waybackurls` for collecting historical URL data.
 - **Extended Web Scraping and Analysis**: Integrates `gospider` and `ffuf` for deep web crawling and directory busting.
+- **Reverse WHOIS lookup and associated ASN numbers**: Performs a whois lookup and grabs the associated ASN numbers for the discovered IP's.
 
 ### Happy Hacking!
 
