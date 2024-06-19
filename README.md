@@ -32,4 +32,4 @@ chmod +x webrecon.sh
 Run the script as sudo or root to ensure all dependencies are installed properly. 
 
 **Usage**: 
-sudo ./webrecon.sh <domain>
+sudo ./webrecon.sh domain
