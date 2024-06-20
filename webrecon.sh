@@ -214,7 +214,7 @@ echo -e "admin\nroot\nuser\nsupport\nadministrator\ntest\nguest" > $url/recon/br
 echo -e "admin\npassword\n123456\n1234\n12345\nadmin123\nguest\nguest123\nroot\nroot123\nadmin@123" > $url/recon/brutespray/passwords.txt
 
 echo "[+] Running brutespray..."
-brutespray -f $url/recon/scans/scanned.gnmap -u $url/recon/brutespray/usernames.txt -p $url/recon/brutespray/passwords.txt -t 5 -s ssh,ftp,telnet,mssql,postgresql,imap,pop3,smbnt,smtp,snmp,mysql,vmauthd,vnc,mongodb,nntp,asterisk,teamspeak,oracle,xmpp,rdp
+brutespray -f $url/recon/scans/scanned.gnmap -u $url/recon/brutespray/usernames.txt -p $url/recon/brutespray/passwords.txt -t 5
 
 # Check if brutespray ran successfully
 if [ $? -ne 0 ]; then
