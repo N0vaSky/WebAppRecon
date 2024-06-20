@@ -139,6 +139,12 @@ except Exception as e:
 END
 }
 
+# Function to check if a domain is blocked
+is_blocked() {
+    domain=$1
+    grep -Fxq "$domain" blocked_domains.txt
+}
+
 # Run the installation function
 install_dependencies
 
@@ -153,14 +159,30 @@ touch $url/recon/final.txt
 
 echo "[+] Harvesting subdomains with assetfinder..."
 assetfinder $url >> $url/recon/assets.txt
-cat $url/recon/assets.txt | grep $url >> $url/recon/final.txt
+cat $url/recon/assets.txt | grep $url >> $url/recon/final_temp.txt
 rm $url/recon/assets.txt
+
+# Remove blocked domains from final list
+while read -r domain; do
+    if ! is_blocked "$domain"; then
+        echo "$domain" >> $url/recon/final.txt
+    fi
+done < $url/recon/final_temp.txt
+rm $url/recon/final_temp.txt
 
 echo "[+] Double checking for subdomains with amass..."
 timeout 4m amass enum -d $url >> $url/recon/amass_output.txt
 
 # Extract subdomains and add to final.txt
-grep -Eo "([a-zA-Z0-9_-]+\.$url)" $url/recon/amass_output.txt >> $url/recon/final.txt
+grep -Eo "([a-zA-Z0-9_-]+\.$url)" $url/recon/amass_output.txt >> $url/recon/amass_temp.txt
+
+# Remove blocked domains from amass results
+while read -r domain; do
+    if ! is_blocked "$domain"; then
+        echo "$domain" >> $url/recon/final.txt
+    fi
+done < $url/recon/amass_temp.txt
+rm $url/recon/amass_temp.txt
 
 # Remove duplicates and sort final.txt
 sort -u $url/recon/final.txt -o $url/recon/final.txt
@@ -192,7 +214,7 @@ echo -e "admin\nroot\nuser\nsupport\nadministrator\ntest\nguest" > $url/recon/br
 echo -e "admin\npassword\n123456\n1234\n12345\nadmin123\nguest\nguest123\nroot\nroot123\nadmin@123" > $url/recon/brutespray/passwords.txt
 
 echo "[+] Running brutespray..."
-brutespray -f $url/recon/scans/scanned.gnmap -u $url/recon/brutespray/usernames.txt -p $url/recon/brutespray/passwords.txt -t 5
+brutespray -f $url/recon/scans/scanned.gnmap -u $url/recon/brutespray/usernames.txt -p $url/recon/brutespray/passwords.txt -t 5 -s ssh,ftp,telnet,mssql,postgresql,imap,pop3,smbnt,smtp,snmp,mysql,vmauthd,vnc,mongodb,nntp,asterisk,teamspeak,oracle,xmpp,rdp
 
 # Check if brutespray ran successfully
 if [ $? -ne 0 ]; then
