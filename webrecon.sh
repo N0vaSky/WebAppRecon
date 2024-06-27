@@ -133,7 +133,7 @@ try:
     asn_date = results.get("asn_date")
     with open("$url/recon/asn/${ip}_asn.txt", "w") as f:
         f.write(f"ASN: {asn}\nCIDR: {asn_cidr}\nCountry: {asn_country_code}\nDescription: {asn_description}\nDate: {asn_date}\n")
-    print(f"ASN lookup for IP {ip} completed successfully.")
+    print(f"ASN lookup for IP $ip completed successfully.")
 except Exception as e:
     print(f"Error: {e}")
 END
@@ -213,14 +213,24 @@ echo "[+] Creating targeted username and password lists..."
 echo -e "admin\nroot\nuser\nsupport\nadministrator\ntest\nguest" > $url/recon/brutespray/usernames.txt
 echo -e "admin\npassword\n123456\n1234\n12345\nadmin123\nguest\nguest123\nroot\nroot123\nadmin@123" > $url/recon/brutespray/passwords.txt
 
+# Function to check if Brutespray was successful
+check_brutespray_success() {
+    local log_file=$1
+    if grep -q "Success" "$log_file"; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 echo "[+] Running brutespray..."
-brutespray -f $url/recon/scans/scanned.gnmap -u $url/recon/brutespray/usernames.txt -p $url/recon/brutespray/passwords.txt -t 5
+brutespray -f $url/recon/scans/scanned.gnmap -u $url/recon/brutespray/usernames.txt -p $url/recon/brutespray/passwords.txt -t 5 -o $url/recon/brutespray/brutespray_output.txt
 
 # Check if brutespray ran successfully
-if [ $? -ne 0 ]; then
-    echo "[!] Brutespray encountered an error."
-else
+if check_brutespray_success "$url/recon/brutespray/brutespray_output.txt"; then
     echo "[+] Brutespray completed successfully."
+else
+    echo "[!] Brutespray encountered an error or found no valid credentials."
 fi
 
 echo "[+] Scraping wayback data..."
