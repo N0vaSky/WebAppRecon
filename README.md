@@ -1,6 +1,6 @@
 # Web Reconnaissance Script
 
-This repository hosts `webrecon.sh`, a web reconnaissance script that builds upon the original script from TCM Security's Practical Ethical Hacking course, created by Heath Adams. This script has been enhanced to improve functionality, automate dependencies, and increase usability for comprehensive security assessments. 
+This repository hosts `webrecon.sh`, a web reconnaissance script that builds upon the original script from TCM Security's Practical Ethical Hacking course. This script has been enhanced to improve functionality, automate dependencies, and increase usability for comprehensive security assessments. 
 
 ## Features
 
